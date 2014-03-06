@@ -10,29 +10,38 @@ call textobj#user#plugin('underscore', {
 \      }
 \    })
 
+
 function! s:select_a()
-  normal! F_
+  let found_left = search('\(_\)\|\(\<\)', 'bcp', line('.')) == 2
+  let left = getpos('.')
 
-  let end_pos = getpos('.')
+  let found_right = search('\(_\)\|\(.\ze\>\)', 'p', line('.')) == 2
+  let right = getpos('.')
 
-  normal! f_
+  if !found_left && !found_right
+    return 0
+  endif
 
-  let start_pos = getpos('.')
-  return ['v', start_pos, end_pos]
+  if found_left && found_right
+    let right[2] -= 1
+  endif
+
+  return ['v', left, right]
 endfunction
 
-" ciao_come_stai
 
 function! s:select_i()
-  normal! T_
+  let found_left = search('\(_\zs.\)\|\(\<\)', 'bcp', line('.')) == 2
+  let left = getpos('.')
 
-  let end_pos = getpos('.')
+  let found_right = search('\(.\ze_\)\|\(.\ze\>\)', 'cp', line('.')) == 2
+  let right = getpos('.')
 
-  normal! t_
+  if !found_left && !found_right
+    return 0
+  endif
 
-  let start_pos = getpos('.')
-
-  return ['v', start_pos, end_pos]
+  return ['v', left, right]
 endfunction
 
 let g:loaded_textobj_underscore = 1
