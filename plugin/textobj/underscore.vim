@@ -5,8 +5,8 @@ endif
 call textobj#user#plugin('underscore', {
 \      '-': {
 \        '*sfile*': expand('<sfile>:p'),
-\        'select-a': 'a_',  '*select-a-function*': 's:select_a',
-\        'select-i': 'i_',  '*select-i-function*': 's:select_i'
+\        'select-a': 'au',  '*select-a-function*': 's:select_a',
+\        'select-i': 'iu',  '*select-i-function*': 's:select_i'
 \      }
 \    })
 
